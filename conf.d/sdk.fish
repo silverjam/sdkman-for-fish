@@ -74,10 +74,20 @@ function __fish_sdkman_run_in_bash
     return $sdkStatus
 end
 
+function do_stat
+  #if command -v gstat
+  #gstat -c "%U" $args
+  if uname | grep -qiv darwin
+    stat -f "%Su" $args
+  else
+    stat -c "%U" $args
+  end
+end
+
 # If this is a subshell of a(n initialized) fish owned by the same user, 
 # no initialization necessary. 
 # Otherwise:
-if not set -q SDKMAN_DIR; or test (stat -c "%U" $SDKMAN_DIR) != (whoami)
+if not set -q SDKMAN_DIR; or test (do_stat $SDKMAN_DIR) != (whoami)
     __fish_sdkman_run_in_bash "source $__fish_sdkman_init"
 end
 
