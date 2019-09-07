@@ -77,7 +77,7 @@ end
 function do_stat
   #if command -v gstat
   #gstat -c "%U" $args
-  if uname | grep -qiv darwin
+  if uname | grep -qi darwin
     stat -f "%Su" $args
   else
     stat -c "%U" $args
