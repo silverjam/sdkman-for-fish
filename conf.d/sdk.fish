@@ -76,7 +76,7 @@ end
 
 function do_stat
   if uname | grep -qi darwin
-    if command -v gstat
+    if test -n (command -v gstat)
       gstat -c "%U" $argv
     else
       stat -f "%Su" $argv
@@ -89,7 +89,6 @@ end
 # If this is a subshell of a(n initialized) fish owned by the same user, 
 # no initialization necessary. 
 # Otherwise:
-if not set -q SDKMAN_DIR; or test (do_stat $SDKMAN_DIR) != (whoami)
-    __fish_sdkman_run_in_bash "source $__fish_sdkman_init"
+if not set -q SDKMAN_DIR; or test (do_stat "$SDKMAN_DIR") != (whoami)
+  __fish_sdkman_run_in_bash "source $__fish_sdkman_init"
 end
-
