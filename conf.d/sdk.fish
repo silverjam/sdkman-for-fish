@@ -77,12 +77,12 @@ end
 function do_stat
   if uname | grep -qi darwin
     if command -v gstat
-      gstat -c "%U" $args
+      gstat -c "%U" $argv
     else
-      stat -f "%Su" $args
+      stat -f "%Su" $argv
     end
   else
-    stat -c "%U" $args
+    stat -c "%U" $argv
   end
 end
 
