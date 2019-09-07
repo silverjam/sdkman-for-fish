@@ -75,10 +75,12 @@ function __fish_sdkman_run_in_bash
 end
 
 function do_stat
-  #if command -v gstat
-  #gstat -c "%U" $args
   if uname | grep -qi darwin
-    stat -f "%Su" $args
+    if command -v gstat
+      gstat -c "%U" $args
+    else
+      stat -f "%Su" $args
+    end
   else
     stat -c "%U" $args
   end
